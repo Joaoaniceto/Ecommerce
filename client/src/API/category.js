@@ -20,7 +20,7 @@ export const removeCategory = async (slug,authtoken) =>{
 }
 
 export const updateCategory = async (slug,category,authtoken) =>{
- return await axios.put(`http://localhost:8000/api/categories/${slug}`,category,{
+ return await axios.put(`http://localhost:8000/api/category/${slug}`,category,{
     headers:{
        authtoken
     }

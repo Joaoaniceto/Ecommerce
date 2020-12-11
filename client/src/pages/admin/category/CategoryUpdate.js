@@ -4,6 +4,7 @@ import {toast} from 'react-toastify'
 import {useSelector} from 'react-redux'
 import {getCategory ,
      updateCategory} from '../../../API/category'
+import CategoryForm from '../../../components/forms/categoryForm'
 
 
 
@@ -28,7 +29,7 @@ const CategoryUpdate = ({history, match })=>{
 
     useEffect(()=>{
        loadCategory();
-    },)
+    },[])
 
 
 
@@ -51,26 +52,6 @@ const CategoryUpdate = ({history, match })=>{
 
     }
 
-    const CategoryForm = () => (<form onSubmit={handleSubmit}>
-<div className="form-group">
-    <label>
-        Name
-    </label>
-    <input type="text" 
-    placeholder={name} 
-    value={name} 
-    onChange={(e)=>setName(e.target.value)} 
-    autoFocus
-    required
-    className="form-control">
-   
-
-    </input>
-    <br/>
-    <button className=" btn btn-outline-primary">Save</button>
-</div>
-    </form>)
-
     return(
         <div className="container-fluid">
 <div className="row"> 
@@ -79,7 +60,11 @@ const CategoryUpdate = ({history, match })=>{
 </div>
 <div className="col">
 {loading ? (<h4 className="text-danger">Loading...</h4>):(<h4>Update Category</h4>)}
-{CategoryForm()}
+<CategoryForm
+handleSubmit={handleSubmit}
+name={name}
+setName={setName}
+ />
 </div>
 
 </div>
