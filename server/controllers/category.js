@@ -1,4 +1,6 @@
 const Category = require('../models/category');
+const Sub = require('../models/sub');
+
 
 const Slugify = require('slugify');
 
@@ -50,4 +52,12 @@ exports.update = async(req,res)=>{
     }catch(err){
         res.status(400).send('create category failed')
     }
+}
+
+exports.getSubs = async(req,res)=>{ 
+       Sub.find({parent:req.params.slug}).exec((err,subs)=>{
+           if (err) console.log(err);
+           res.json(subs)
+       })
+
 }
