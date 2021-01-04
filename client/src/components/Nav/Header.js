@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 
-import {Menu} from 'antd'
+import {Menu,Badge} from 'antd'
 
-import { SettingOutlined,HomeOutlined,UserOutlined,UserAddOutlined } from '@ant-design/icons';
+import { SettingOutlined,HomeOutlined,UserOutlined,UserAddOutlined,ShopOutlined,ShoppingCartOutlined } from '@ant-design/icons';
 
 import {Link} from 'react-router-dom'
 import firebase from 'firebase'
 import {useDispatch, useSelector} from 'react-redux'
 import {useHistory} from 'react-router-dom'
+import Search from '../forms/search'
+
 
 const { SubMenu,Item } = Menu; // subbmenu
 
@@ -19,6 +21,8 @@ const Header = () => {
 
    const [current, setcurrent] = useState('home');
 
+
+
    const handleClick = (e) =>{
        setcurrent(e.key)
        //
@@ -26,7 +30,7 @@ const Header = () => {
 
    let dispatch = useDispatch();
    // select user from redux
-   let { user } = useSelector((state)=>({...state}))
+   let { user,cart } = useSelector((state)=>({...state}))
    let history = useHistory();
 
 
@@ -45,6 +49,18 @@ const Header = () => {
       <Link to="/">Home</Link>
     </Item>
 
+    <Item key="Shop" icon={<ShopOutlined   />}>
+      <Link to="/shop">Shop</Link>
+    </Item>
+
+    <Item key="Cart" icon={<ShoppingCartOutlined   />}>
+      <Link to="/cart">
+        <Badge count={cart.length} offset={[9,0]}>
+          Cart
+        </Badge>
+      </Link>
+    </Item>
+
     {!user && ( <Item key="register" icon={<UserAddOutlined />} className="float-right">
     <Link to="/register">Register</Link>
     </Item>)}
@@ -54,7 +70,7 @@ const Header = () => {
     <Link to="/login">Login</Link>
     </Item>)}
  
-
+ 
 {user && (  <SubMenu
       icon={<SettingOutlined />}
       title={user.name } // name / @gmail.com [name,gmail.com]
@@ -73,6 +89,9 @@ const Header = () => {
         <Item icon={<UserOutlined />} onClick={logout}>Logout</Item>
     </SubMenu>)}
  
+    <span className="float-right">
+      <Search />
+    </span>
   
   
   </Menu>

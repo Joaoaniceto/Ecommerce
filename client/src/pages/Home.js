@@ -3,7 +3,10 @@ import {getProductsbyCount,getProducts} from '../API/product.js'
 import ProductCard from '../components/cards/productCardd'
 import Jumbotron from '../components/cards/jumbotron'
 import LoadingCard from '../components/cards/loadingcard'
-
+import NewArrivals from '../components/home/NewArrivals'
+import BestSellers from '../components/home/BestSellers'
+import CategoryList from '../components/Category/CategoryList'
+import SubsList from  '../components/subList/subList'
 
 const Home = () =>{
 
@@ -24,7 +27,7 @@ loadAllProducts()
             (res)=>{
                 setproducts(res.data);
                 setloading(false)
-            }
+            } 
         )
     }
     
@@ -33,18 +36,28 @@ loadAllProducts()
        <div className="jumbotron text-danger h1 font-weight-bold text-center">
           <Jumbotron text={['Latest Product','New Arrivals','Best Sellers']}/>
        </div>
-       <div className="containter">
-       {loading ? <LoadingCard count={3} /> :
-       <div className="row">
-       
-{products.map((product)=>
-    <div key={product._id} className="col-md-4">
-    <ProductCard products={product} />
-    </div>
-)}
-       </div>
-       }
-       </div>
+
+       <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+           New Arrivals
+       </h4>
+       <NewArrivals/>
+
+       <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+           Best Sellers
+       </h4>
+
+       <BestSellers/>
+
+       <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+           Categories
+       </h4>
+       <CategoryList/>
+
+       <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+           Subs
+       </h4>
+         <SubsList/>
+
        </>
     );
 }

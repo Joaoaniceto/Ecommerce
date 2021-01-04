@@ -1,5 +1,5 @@
 const Sub = require('../models/sub');
-
+const product = require('../models/product');
 const Slugify = require('slugify');
 
 
@@ -27,10 +27,12 @@ exports.remove = async (req,res)=>{
 
 exports.read = async(req,res)=>{
     try{
-        console.log(req.params.slug)
-     let sub = await Sub.findOne({slug:req.params.slug})
-
-     res.json(sub);
+     let sub = await Sub.findOne({slug:req.params.slug}).exec()
+     const products = await product.find({subs:sub}).populate('category').exec()
+     res.json({
+         sub,
+         products
+        });
     }catch(err){
         res.status(400).send('create Sub failed')
     }

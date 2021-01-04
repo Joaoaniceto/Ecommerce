@@ -29,7 +29,8 @@ const authRoutes = require('./routes/auth');
   mongoose.connect(process.env.DATABASE,{
     useNewUrlParseR:true,
     useCreateIndex:true,
-    useFindAndModify:true
+    useFindAndModify:false,
+    useUnifiedTopology:true,
    
   })
   .then(()=>console.log('succes'))

@@ -22,12 +22,18 @@ import SubUpdate from  './pages/admin/category/subUpdate'
 import ProductCreate from './pages/Product/ProductCreate'
 import AllProducts from './pages/Product/allProducts'
 import ProductUpdate from './pages/Product/ProductUpdate'
-
+import Product from './pages/Product'
+import CategoryHome from './pages/category/CategoryHome'
+import Shop from './pages/shop'
 import {auth} from './firebase'
 import {useDispatch} from 'react-redux'
 import { currentUser } from './API/auth'
-
-
+import SubsHome from './pages/Subs/subs';
+import Cart from  './pages/Cart'
+import Sidedrawer from './components/Drawer/SideDrawer'
+import Checkout from './pages/user/Checkout'
+import CreateCoupon from './pages/admin/coupon/createcoupon'
+import Payment from './pages/Payment'
 
 const App = () => {
  const dispatch = useDispatch()
@@ -65,6 +71,7 @@ const App = () => {
 
   return(
     <>
+    <Sidedrawer />
        <Header />
        <ToastContainer/>
     <Switch>
@@ -86,7 +93,17 @@ const App = () => {
       <AdminRoute exact path="/admin/product" component={ProductCreate} />
       <AdminRoute exact path="/admin/products" component={AllProducts} />
       <AdminRoute exact path="/admin/product/:slug" component={ProductUpdate} />
+      <AdminRoute exact path="/admin/coupon" component={CreateCoupon} />
+      <Route exact path="/product/:slug" component={Product}></Route>
+      <Route exact path="/category/:slug" component={CategoryHome}></Route>
+      <Route exact path="/sub/:slug" component={SubsHome}></Route>
+      <Route exact path="/shop" component={Shop}></Route>
+      <Route exact path="/cart" component={Cart}></Route>
+      <Route exact path="/Checkout" component={Checkout}></Route>
+      <Route exact path="/payment" component={Payment}></Route>
+
     </Switch>
+    
     </>
   );
  

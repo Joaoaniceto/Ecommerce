@@ -1,39 +1,34 @@
-import React from 'react'
-import {useState ,useEffect} from 'react'
+import React,{useState,useEffect} from 'react'
 import AdminNav from '../../components/Nav/AdminNav'
 import AdminProductCard from '../../components/cards/adminProductCard'
 import {getProductsbyCount} from '../../API/product.js'
+import {getOrders,changeStatus} from '../../API/admin'
+import {useSelector,useDispatch} from 'react-redux'
+import {toast} from 'react-toastify'
+import Orders from '../../components/orders/Order'
 
 
 const AdminDashboard = ()=>{
 
 
-const [products, setproducts] = useState([])
-const [loading, setloading] = useState(false);
+    const {user} = useSelector(state =>({...state}))
+    const [orders, setorders] = useState([])
 
-
-const loadAllProducts = ()=>{
-    setloading(true);
-    getProductsbyCount(100)
-    .then(
-        (res)=>{
-            
-            console.log(res.data)
-            setproducts(res.data);
-             setloading(false)
-        }
-    )
-    .catch((err)=>{
-        console.log(err)
-         setloading(false)
+    useEffect(() => {
+    getOrders(user.token).then((res)=>{
+        setorders(res.data)
     })
-}
-
-useEffect(()=>{
-    loadAllProducts()
-},[])
+    }, [])
 
 
+    const handleStatusChange = (orderId,orderStatus)=>{
+        console.log(orderStatus);
+changeStatus(orderId,orderStatus,user.token)
+.then(res=>{
+toast.success('statusupdated')
+})
+
+    }
 
     return(
         <div className="container-fluid">
@@ -42,7 +37,8 @@ useEffect(()=>{
     <AdminNav />
 </div>
 <div className="col">
-<h4 >Dasheboard</h4>
+<h4>Dasheboard</h4>
+<Orders orders={orders} handlestatuschange={handleStatusChange}/>
 </div>
 </div>
     </div>
